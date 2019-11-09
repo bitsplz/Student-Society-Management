@@ -147,7 +147,7 @@ namespace Test3.Views
                     {
                         Session["log"] = v.User_Name;
                         return RedirectToAction("AfterLogin");
-                    }
+                    }else return RedirectToAction("InvalidLogin");
                 }
             }
             return View(u);
@@ -163,6 +163,11 @@ namespace Test3.Views
             {
                 return RedirectToAction("login");
             }
+        }
+
+        public ActionResult InvalidLogin()
+        {
+            return View();
         }
     }
 }
