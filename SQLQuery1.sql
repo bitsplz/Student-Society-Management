@@ -1,0 +1,1 @@
+﻿alter table Users add constraint unq_user unique (User_Name)

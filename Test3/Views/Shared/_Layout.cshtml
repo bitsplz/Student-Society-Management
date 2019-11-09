@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Society Management System</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        body {
+            padding: 0px;
+        }
+
+        #header {
+            //padding: 15px 0 0;
+            //width: 100%;
+            background: #700f1a;
+            box-shadow: 0 0 0px;
+        }
+
+            #header .holder {
+                /*background: url(../images/title.png) no-repeat 90% 50%;*/
+                overflow: hidden;
+                margin: 0 auto 1px;
+                //width: 1000px;
+                height: 2%;
+            }
+
+        #Logo {
+               margin-left: 10%;
+               width: 25%;
+               padding:1% 1% 0% 1%;
+               float: left;
+               overflow: hidden;
+               text-indent: -99999px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #696969;
+        }
+
+        #nav {
+            background: #666;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <header id="header">
+        <div class="holder">
+            @*<strong class="logo">
+                @*<a href="https://webapps.iba.edu.pk/sfs/home/index" title="Click here for Dashboard">Institute of Business Administration</a>*@
+            <img src="~/Images/Screenshot (20).png" alt="Logo" id="Logo" />
+            @*</strong>*@
+        </div>
+        <nav id="nav">
+        </nav>
+    </header>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - For IBA Societies Only</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
