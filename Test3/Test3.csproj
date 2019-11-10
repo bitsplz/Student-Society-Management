@@ -257,6 +257,7 @@
     <Content Include="Views\Societies\Edit.cshtml" />
     <Content Include="Views\Societies\Index.cshtml" />
     <Content Include="Views\Users\InvalidLogin.cshtml" />
+    <Content Include="Views\Users\gittest.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
