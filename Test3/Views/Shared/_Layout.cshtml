@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Society Management System</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/font-awesome.css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
         body {
@@ -27,12 +28,12 @@
             }
 
         #Logo {
-               margin-left: 10%;
-               width: 25%;
-               padding:1% 1% 0% 1%;
-               float: left;
-               overflow: hidden;
-               text-indent: -99999px;
+            margin-left: 10%;
+            width: 25%;
+            padding: 1% 1% 0% 1%;
+            float: left;
+            overflow: hidden;
+            text-indent: -99999px;
         }
 
         a {
@@ -69,6 +70,10 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
