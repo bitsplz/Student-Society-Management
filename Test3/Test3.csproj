@@ -171,6 +171,7 @@
     <Compile Include="Controllers\ReservesController.cs" />
     <Compile Include="Controllers\SocietiesController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Views\Societies\test.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
