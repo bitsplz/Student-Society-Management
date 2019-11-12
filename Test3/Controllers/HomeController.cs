@@ -15,7 +15,7 @@ namespace Test3.Controllers
 
             return View();
         }
-
+        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -23,6 +23,13 @@ namespace Test3.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult Index()
+        {
+            ViewBag.Message = "Home Page";
+            ViewData["uname"] = User.Identity.Name;
+            return View();
+        }
         
     }
 }

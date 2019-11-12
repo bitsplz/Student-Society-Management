@@ -155,13 +155,13 @@ namespace Test3.Views
 
         public ActionResult AfterLogin()
         {
-            if (Session["log"] != null)
+            if (User.Identity.IsAuthenticated )
             {
                 return View();
             }
             else
             {
-                return RedirectToAction("login");
+                return RedirectToAction("Login", "Login");
             }
         }
 

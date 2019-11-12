@@ -11,7 +11,8 @@ namespace Test3.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,9 @@ namespace Test3.Models
         }
     
         public int User_ID { get; set; }
+        [DisplayName("Username")]
         public string User_Name { get; set; }
+        [DisplayName("Password")]
         public string User_Pass { get; set; }
         public int Type_ID { get; set; }
     
