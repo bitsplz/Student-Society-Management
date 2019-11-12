@@ -8,7 +8,7 @@ namespace Test3
 {
     public class CustomAuth : AuthorizeAttribute
     {
-        public override void OnAuthorization(AuthorizationContext filterContext)
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             if (filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
@@ -16,9 +16,7 @@ namespace Test3
             }
             else
             {
-
-
-                base.OnAuthorization(filterContext);
+                filterContext.Result = new HttpUnauthorizedResult();
             }
         }
     }
