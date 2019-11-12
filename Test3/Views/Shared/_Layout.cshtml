@@ -69,6 +69,10 @@
                         @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
                         @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
                     </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "nav-item active" : "nav-item")">
+                        @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+                        @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
+                    </li>
 
                 </ul>
                 @if (User.Identity.IsAuthenticated)

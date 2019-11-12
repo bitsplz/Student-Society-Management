@@ -15,7 +15,7 @@ namespace Test3.Controllers
 
             return View();
         }
-        [Authorize]
+        [CustomAuth(Roles ="admin")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
