@@ -293,7 +293,6 @@
     <Content Include="Views\Users\Login2.cshtml" />
     <Content Include="Views\Users\AfterLogin.cshtml" />
     <Content Include="Views\Users\InvalidLogin.cshtml" />
-    <Content Include="Views\Users\gittest.cshtml" />
     <Content Include="Views\Reserves\Create.cshtml" />
     <Content Include="Views\Reserves\Delete.cshtml" />
     <Content Include="Views\Reserves\Details.cshtml" />
