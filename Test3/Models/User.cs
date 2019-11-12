@@ -26,6 +26,7 @@ namespace Test3.Models
         public string User_Name { get; set; }
         [DisplayName("Password")]
         public string User_Pass { get; set; }
+        
         public int Type_ID { get; set; }
     
         public virtual User_Type User_Type { get; set; }
