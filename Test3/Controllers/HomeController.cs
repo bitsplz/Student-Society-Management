@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Test3.Controllers
 {
@@ -26,7 +27,13 @@ namespace Test3.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            ViewBag.Message = "Home Page";
+            RolePrincipal r = (RolePrincipal)User;
+            String[] a = r.GetRoles();
+            switch (a[0])
+            {
+                case "ob": return RedirectToAction("AfterLogin", "Users"); break;
+            }
+            ViewBag.Message = "Home Page ";
             ViewData["uname"] = User.Identity.Name;
             return View();
         }

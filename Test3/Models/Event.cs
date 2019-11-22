@@ -11,8 +11,7 @@ namespace Test3.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-
+    
     public partial class Event
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,9 +19,8 @@ namespace Test3.Models
         {
             this.Reserves = new HashSet<Reserves>();
         }
-        
+    
         public int Event_ID { get; set; }
-        [DisplayName("Event")]
         public string Event_name { get; set; }
         public int Society_ID { get; set; }
     
