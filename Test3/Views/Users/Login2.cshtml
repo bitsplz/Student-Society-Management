@@ -69,43 +69,27 @@
     //this is for create form tag
     @Html.AntiForgeryToken() // this is for prevent CSRF attack
     @Html.ValidationSummary(true)
-    if (@ViewBag.Message != null)
-    {
-
-        @*<div style="border:1px solid red">
-                @ViewBag.Message
-            </div>*@
-    }
+    <div class="form-horizontal">
     <div class="heading">LOGIN</div>
     <div class="login-page">
         <div class="form">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-               @* @Html.LabelFor(model => model.User_Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                @*<div class="col-md-10">*@
                     @Html.EditorFor(model => model.User_Name, new { htmlAttributes = new { @class = "input", placeholder="UserName" } } )
                     @Html.ValidationMessageFor(model => model.User_Name, "", new { @class = "text-danger" })
-                @*</div>*@
             </div>
 
             <div class="form-group">
-                @*@Html.LabelFor(model => model.User_Pass, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                @*<div class="col-md-10">*@
                     @Html.EditorFor(model => model.User_Pass, new { htmlAttributes = new { @class = "input", placeholder="Password"  } })
                     @Html.ValidationMessageFor(model => model.User_Pass, "", new { @class = "text-danger" })
-                @*</div>*@
             </div>
 
             <div class="form-group">
-                @*<div class="col-md-offset-2 col-md-10">*@
                     <input type="submit" value="Login" class="login" />
-                @*</div>*@
             </div>
         </div>
     </div>
-
-
-
+    </div>
     @*<table>
             <tr>
                 <td>@Html.LabelFor(a => a.User_Name,  htmlAttributes: new { @class = "control-label col-md-2" })</td>

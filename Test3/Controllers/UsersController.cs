@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Test3.Models;
+using System.Web.Security;
 
 namespace Test3.Views
 {
@@ -130,44 +131,47 @@ namespace Test3.Views
             base.Dispose(disposing);
         }
 
-        public ActionResult login2()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult login2([Bind(Include = "User_Name,User_Pass")] User u)
-        {
-            if (ModelState.IsValid)
-            {
-                using (db)
-                {
-                    var v = db.Users.Where(model => model.User_Name.Equals(u.User_Name) && model.User_Pass.Equals(u.User_Pass)).FirstOrDefault();
-                    if (v != null)
-                    {
-                        Session["log"] = v.User_Name;
-                        return RedirectToAction("AfterLogin");
-                    }else return RedirectToAction("InvalidLogin");
-                }
-            }
-            return View(u);
-        }
+        //public ActionResult login2()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult login2([Bind(Include = "User_Name,User_Pass")] User u)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        using (db)
+        //        {
+        //            var v = db.Users.Where(model => model.User_Name.Equals(u.User_Name) && model.User_Pass.Equals(u.User_Pass)).FirstOrDefault();
+        //            if (v != null)
+        //            {
+        //                Session["log"] = v.User_Name;
+        //                return RedirectToAction("AfterLogin");
+        //            }else return RedirectToAction("InvalidLogin");
+        //        }
+        //    }
+        //    return View(u);
+        //}
 
         public ActionResult AfterLogin()
         {
             if (User.Identity.IsAuthenticated )
             {
+                //RolePrincipal r = (RolePrincipal)User;
+                //String[] a = r.GetRoles();
+                //switch (a[0])
+                //{
+                //    case "ob": return RedirectToAction("AfterLogin", "Users"); break;
+                //}
+                //ViewBag.Message = "Home Page ";
+                //ViewData["uname"] = User.Identity.Name;
                 return View();
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-        }
-
-        public ActionResult InvalidLogin()
-        {
-            return View();
         }
     }
 }

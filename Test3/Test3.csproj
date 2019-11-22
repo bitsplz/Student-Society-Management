@@ -59,6 +59,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mvc.Mailer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -532,7 +535,6 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Login2.cshtml" />
     <Content Include="Views\Users\AfterLogin.cshtml" />
-    <Content Include="Views\Users\InvalidLogin.cshtml" />
     <Content Include="Views\Reserves\Create.cshtml" />
     <Content Include="Views\Reserves\Delete.cshtml" />
     <Content Include="Views\Reserves\Details.cshtml" />

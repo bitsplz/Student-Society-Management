@@ -19,13 +19,12 @@
             box-shadow: 0 0 0px;
         }
 
-            #header .holder {
-                /*background: url(../images/title.png) no-repeat 90% 50%;*/
-                overflow: hidden;
+        #header .holder {
+            overflow: hidden;
                 margin: 0 auto 1px;
                 //width: 1000px;
                 height: 2%;
-            }
+        }
 
         #Logo {
             margin-left: 10%;
@@ -40,11 +39,10 @@
             text-decoration: none;
             color: #696969;
         }
-
-        #nav {
-            background: #666;
-            height: 30px;
-        }
+        /*nav{
+            height:30px;
+        }*/
+       
     </style>
 </head>
 <body>
@@ -58,39 +56,42 @@
             @*</strong>*@
         </div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            
-            <a class="navbar-brand" href="#">SMS</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "nav-item active" : "nav-item")">
-                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
-                        @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
-                    </li>
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "nav-item active" : "nav-item")">
-                        @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
-                        @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
-                    </li>
+            @*<nav class="navbar navbar-expand-md navbar-dark bg-secondary">*@
 
-                </ul>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            @Html.ActionLink("Sign Out", "Logout", "Login", null, new { @class = "nav-link" })
+                @*<a class="navbar-brand" href="#">SMS</a>*@
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "nav-item active" : "nav-item")">
+                            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                            @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
                         </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "nav-item active" : "nav-item")">
+                            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+                            @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
+                        </li>
+
                     </ul>
-                }else {
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Login" ? "nav-item active" : "nav-item")">
-                        @Html.ActionLink("Login", "Login", "Login", null, new { @class = "nav-link" })
-                    </li>
-                </ul>
-                }
-            </div>
-        </nav>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                @Html.ActionLink("Sign Out", "Logout", "Login", null, new { @class = "nav-link" })
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Login" ? "nav-item active" : "nav-item")">
+                                @Html.ActionLink("Login", "Login", "Login", null, new { @class = "nav-link" })
+                            </li>
+                        </ul>
+                    }
+                </div>
+            </nav>
     </header>
     <div class="container body-content">
         @RenderBody()
