@@ -11,15 +11,12 @@ namespace Test3.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-
+    
     public partial class Reserves
     {
         public int Reserve_ID { get; set; }
         public System.DateTime Date { get; set; }
-        [DisplayName("Start Time")]
         public System.TimeSpan Start_Time { get; set; }
-        [DisplayName("End Time")]
         public System.TimeSpan End_Time { get; set; }
         public int Room_ID { get; set; }
         public int Event_ID { get; set; }

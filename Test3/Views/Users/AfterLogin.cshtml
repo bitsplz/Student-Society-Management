@@ -13,7 +13,7 @@
     </text>
 }
 <style>
-    .box{
+    /*.box {
         position: relative;
         z-index: 1;
         background: #FFFFFF;
@@ -22,35 +22,62 @@
         padding: 30px 30px 30px 30px;
         text-align: center;
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    }
-    .button{
+    }*/
+
+    .button {
         font-family: "Roboto", sans-serif;
         text-transform: uppercase;
         outline: 0;
         background: darkred;
         width: 80%;
-        border-radius:50px;
+        border-radius: 50px;
         border: 0;
         padding: 10px;
         color: #FFFFFF;
         font-size: 14px;
         cursor: pointer;
-        margin-top:3%;
+        margin-top: 3%;
+    }
+    #login-page {
+            width: 80%;
+            padding: 0 0 0;
+            margin: 0 auto;
+        }
+    .form {
+            position: relative;
+            z-index: 1;
+            background: #FFFFFF;
+            max-width: 360px;
+            margin: 0 auto 100px;
+            padding: 30px 30px 25px 30px;
+            text-align: center;
+        }
+
+    .btn-primary{
+        background: darkred;
+        border-color: darkred;
+        border-radius:40px;
+        padding:3%;
     }
 </style>
-@*<div class="box">*@
-<section style="padding: 0% 30% 0% 30%;">
-    <div class="col-md-offset-1 col-md-10" style="margin-bottom: 4%;">
-        <input type="submit" value="Event" class="button" />
+<centre><h4>Welcome @ViewData["uname"]</h4></centre>
+<div class="col-md-4 col-xs-9" id="login-page">
+    <div class="form">
+
+        @*<section style="padding: 0% 30% 0% 30%;">*@
+        <div class="col-md-15" style="margin-bottom: 4%;">
+            @Html.ActionLink("Event", "Index", "Events", null, new { @class = "btn btn-primary col-md-9 col-sm-8 col-xs-8" })
+            @*<input type="submit" value="Event" class="button" />*@
+        </div>
+        <div class="col-md-15" style="margin-bottom: 4%;">
+            <input type="submit" value="Finance" class="button" />
+        </div>
+        <div class="col-md-15" style="margin-bottom: 4%;">
+            <input type="submit" value="Quotation" class="button" />
+        </div>
+        <div class="col-md-15" style="margin-bottom: 4%;">
+            <input type="submit" value="Security" class="button" />
+        </div>
+        </div>
+        @*</section>*@
     </div>
-    <div class="col-md-offset-1 col-md-10" style="margin-bottom: 4%;">
-        <input type="submit" value="Finance" class="button" />
-    </div>
-    <div class="col-md-offset-1 col-md-10" style="margin-bottom: 4%;">
-        <input type="submit" value="Quotation" class="button" />
-    </div>
-    <div class="col-md-offset-1 col-md-10" style="margin-bottom: 4%;">
-        <input type="submit" value="Security" class="button" />
-        @*</div>*@
-</section>
-</div>
