@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/10/2019 16:16:13
+-- Date Created: 11/22/2019 14:21:00
 -- Generated from EDMX file: F:\Users\hamma\source\Repos\Test3\Test3\Models\Model1.edmx
 -- --------------------------------------------------
 
@@ -17,43 +17,43 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_EventReserves]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_EventReserves];
-GO
 IF OBJECT_ID(N'[dbo].[FK_Position]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_Position];
 GO
 IF OBJECT_ID(N'[dbo].[FK_RoomsReserves]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_RoomsReserves];
 GO
+IF OBJECT_ID(N'[dbo].[FK_EventReserves]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_EventReserves];
+GO
 IF OBJECT_ID(N'[dbo].[FK_SocietyEvent]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Events] DROP CONSTRAINT [FK_SocietyEvent];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserSociety]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Societies] DROP CONSTRAINT [FK_UserSociety];
+IF OBJECT_ID(N'[dbo].[FK_SocietyUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_SocietyUser];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
+GO
+IF OBJECT_ID(N'[dbo].[User_Type]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[User_Type];
+GO
+IF OBJECT_ID(N'[dbo].[Societies]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Societies];
+GO
+IF OBJECT_ID(N'[dbo].[Rooms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Rooms];
+GO
 IF OBJECT_ID(N'[dbo].[Events]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Events];
 GO
 IF OBJECT_ID(N'[dbo].[Reserves]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Reserves];
-GO
-IF OBJECT_ID(N'[dbo].[Rooms]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Rooms];
-GO
-IF OBJECT_ID(N'[dbo].[Societies]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Societies];
-GO
-IF OBJECT_ID(N'[dbo].[User_Type]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[User_Type];
-GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -65,7 +65,8 @@ CREATE TABLE [dbo].[Users] (
     [User_ID] int IDENTITY(1,1) NOT NULL,
     [User_Name] varchar(100)  NOT NULL,
     [User_Pass] varchar(max)  NOT NULL,
-    [Type_ID] int  NOT NULL
+    [Type_ID] int  NOT NULL,
+    [Society_ID] int  NULL
 );
 GO
 
@@ -80,7 +81,7 @@ GO
 CREATE TABLE [dbo].[Societies] (
     [Society_ID] int IDENTITY(1,1) NOT NULL,
     [Society_Name] varchar(30)  NOT NULL,
-    [User_ID] int  NULL
+    [Patron_Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -216,19 +217,19 @@ ON [dbo].[Events]
     ([Society_ID]);
 GO
 
--- Creating foreign key on [User_ID] in table 'Societies'
-ALTER TABLE [dbo].[Societies]
-ADD CONSTRAINT [FK_UserSociety]
-    FOREIGN KEY ([User_ID])
-    REFERENCES [dbo].[Users]
-        ([User_ID])
+-- Creating foreign key on [Society_ID] in table 'Users'
+ALTER TABLE [dbo].[Users]
+ADD CONSTRAINT [FK_SocietyUser]
+    FOREIGN KEY ([Society_ID])
+    REFERENCES [dbo].[Societies]
+        ([Society_ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_UserSociety'
-CREATE INDEX [IX_FK_UserSociety]
-ON [dbo].[Societies]
-    ([User_ID]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_SocietyUser'
+CREATE INDEX [IX_FK_SocietyUser]
+ON [dbo].[Users]
+    ([Society_ID]);
 GO
 
 -- --------------------------------------------------

@@ -17,8 +17,7 @@ namespace Test3.Views
         // GET: Societies
         public ActionResult Index()
         {
-            var societies = db.Societies.Include(s => s.User);
-            return View(societies.ToList());
+            return View(db.Societies.ToList());
         }
 
         // GET: Societies/Details/5
@@ -39,7 +38,9 @@ namespace Test3.Views
         // GET: Societies/Create
         public ActionResult Create()
         {
-            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name");
+            int typeid = db.User_Type.Where(x => x.Type_Name == "patron").FirstOrDefault().Type_ID;
+            ViewBag.Patron_Name =
+                new SelectList(db.Users.Where(x=>x.Type_ID == typeid), "User_Name", "User_Name");
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Society_ID,Society_Name,User_ID")] Society society)
+        public ActionResult Create([Bind(Include = "Society_ID,Society_Name,Patron_Name")] Society society)
         {
             if (ModelState.IsValid)
             {
@@ -56,8 +57,9 @@ namespace Test3.Views
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", society.User_ID);
+            int typeid = db.User_Type.Where(x => x.Type_Name == "patron").FirstOrDefault().Type_ID;
+            ViewBag.Patron_Name =
+                new SelectList(db.Users, "User_ID", "User_Name");
             return View(society);
         }
 
@@ -73,7 +75,6 @@ namespace Test3.Views
             {
                 return HttpNotFound();
             }
-            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", society.User_ID);
             return View(society);
         }
 
@@ -82,7 +83,7 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Society_ID,Society_Name,User_ID")] Society society)
+        public ActionResult Edit([Bind(Include = "Society_ID,Society_Name,Patron_Name")] Society society)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +91,6 @@ namespace Test3.Views
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.User_ID = new SelectList(db.Users, "User_ID", "User_Name", society.User_ID);
             return View(society);
         }
 

@@ -35,6 +35,7 @@ namespace Test3.Controllers
             if (v != null)
             {
                 FormsAuthentication.SetAuthCookie(u.User_Name, false);
+                Session["CurrentUser"] = v;
                 if (ReturnUrl != "")
                     return Redirect(ReturnUrl);
                 else

@@ -18,14 +18,16 @@ namespace Test3.Models
         public Society()
         {
             this.Events = new HashSet<Event>();
+            this.Users = new HashSet<User>();
         }
     
         public int Society_ID { get; set; }
         public string Society_Name { get; set; }
-        public Nullable<int> User_ID { get; set; }
+        public string Patron_Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
-        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

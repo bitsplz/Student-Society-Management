@@ -28,6 +28,7 @@ namespace Test3.Controllers
         {
             ViewBag.Message = "Home Page";
             ViewData["uname"] = User.Identity.Name;
+            
             return View();
         }
         

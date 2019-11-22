@@ -28,9 +28,9 @@
       <End Role="Society" EntitySet="Societies" />
       <End Role="Event" EntitySet="Events" />
     </AssociationSet>
-    <AssociationSet Name="UserSociety" Association="Model1.Store.UserSociety">
-      <End Role="User" EntitySet="Users" />
+    <AssociationSet Name="FK_SocietyUser" Association="Model1.Store.FK_SocietyUser">
       <End Role="Society" EntitySet="Societies" />
+      <End Role="User" EntitySet="Users" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
@@ -41,6 +41,7 @@
     <Property Name="User_Name" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="User_Pass" Type="varchar(max)" Nullable="false" />
     <Property Name="Type_ID" Type="int" Nullable="false" />
+    <Property Name="Society_ID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="User_Type">
     <Key>
@@ -55,7 +56,7 @@
     </Key>
     <Property Name="Society_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Society_Name" Type="varchar" Nullable="false" MaxLength="30" />
-    <Property Name="User_ID" Type="int" Nullable="true" />
+    <Property Name="Patron_Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Rooms">
     <Key>
@@ -133,15 +134,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="UserSociety">
-    <End Role="User" Type="Model1.Store.Users" Multiplicity="0..1" />
-    <End Role="Society" Type="Model1.Store.Societies" Multiplicity="*" />
+  <Association Name="FK_SocietyUser">
+    <End Role="Society" Type="Model1.Store.Societies" Multiplicity="0..1" />
+    <End Role="User" Type="Model1.Store.Users" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="User_ID" />
+      <Principal Role="Society">
+        <PropertyRef Name="Society_ID" />
       </Principal>
-      <Dependent Role="Society">
-        <PropertyRef Name="User_ID" />
+      <Dependent Role="User">
+        <PropertyRef Name="Society_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -172,9 +173,9 @@
             <End Role="Society" EntitySet="Societies" />
             <End Role="Event" EntitySet="Events" />
           </AssociationSet>
-          <AssociationSet Name="UserSociety" Association="Model1.UserSociety">
-            <End EntitySet="Users" Role="User" />
-            <End EntitySet="Societies" Role="Society" />
+          <AssociationSet Name="FK_SocietyUser" Association="Model1.FK_SocietyUser">
+            <End Role="Society" EntitySet="Societies" />
+            <End Role="User" EntitySet="Users" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="User">
@@ -186,7 +187,8 @@
           <Property Name="User_Pass" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="User_Type" Relationship="Model1.Position" FromRole="User" ToRole="User_Type" />
           <Property Name="Type_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Societies" Relationship="Model1.UserSociety" FromRole="User" ToRole="Society" />
+          <Property Name="Society_ID" Type="Int32" />
+          <NavigationProperty Name="Society" Relationship="Model1.FK_SocietyUser" FromRole="User" ToRole="Society" />
         </EntityType>
         <EntityType Name="User_Type">
           <Key>
@@ -215,8 +217,8 @@
           <Property Name="Society_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Society_Name" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Events" Relationship="Model1.SocietyEvent" FromRole="Society" ToRole="Event" />
-          <NavigationProperty Name="User" Relationship="Model1.UserSociety" FromRole="Society" ToRole="User" />
-          <Property Name="User_ID" Nullable="true" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Model1.FK_SocietyUser" FromRole="Society" ToRole="User" />
+          <Property Name="Patron_Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Rooms">
           <Key>
@@ -287,15 +289,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserSociety">
-          <End Type="Model1.User" Multiplicity="0..1" Role="User" />
-          <End Type="Model1.Society" Multiplicity="*" Role="Society" />
+        <Association Name="FK_SocietyUser">
+          <End Type="Model1.Society" Role="Society" Multiplicity="0..1" />
+          <End Type="Model1.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="User_ID" />
+            <Principal Role="Society">
+              <PropertyRef Name="Society_ID" />
             </Principal>
-            <Dependent Role="Society">
-              <PropertyRef Name="User_ID" />
+            <Dependent Role="User">
+              <PropertyRef Name="Society_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -312,6 +314,7 @@
           <ScalarProperty Name="User_Name" ColumnName="User_Name" />
           <ScalarProperty Name="User_Pass" ColumnName="User_Pass" />
           <ScalarProperty Name="Type_ID" ColumnName="Type_ID" />
+          <ScalarProperty Name="Society_ID" ColumnName="Society_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -328,7 +331,7 @@
         <MappingFragment StoreEntitySet="Societies">
           <ScalarProperty Name="Society_ID" ColumnName="Society_ID" />
           <ScalarProperty Name="Society_Name" ColumnName="Society_Name" />
-          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="Patron_Name" ColumnName="Patron_Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

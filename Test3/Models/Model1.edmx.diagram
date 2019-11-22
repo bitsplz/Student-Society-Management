@@ -15,7 +15,8 @@
         <AssociationConnector Association="Model1.RoomsReserves" />
         <AssociationConnector Association="Model1.EventReserves" />
         <AssociationConnector Association="Model1.SocietyEvent" />
-        <AssociationConnector Association="Model1.UserSociety" />
+        <AssociationConnector Association="Model1.FK_SocietyUser" />
+        <AssociationConnector Association="Model1.Patrons" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

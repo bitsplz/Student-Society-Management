@@ -13,11 +13,13 @@ namespace Test3.Views
     public class EventsController : Controller
     {
         private Model1Container db = new Model1Container();
-
+        private int? s;
         // GET: Events
         public ActionResult Index()
         {
-            var events = db.Events.Include(a => a.Society);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            var events = db.Events.Where(a => a.Society.Society_ID == s);
+
             return View(events.ToList());
         }
 
@@ -39,7 +41,8 @@ namespace Test3.Views
         // GET: Events/Create
         public ActionResult Create()
         {
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name");
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name");
             return View();
         }
 
@@ -56,8 +59,8 @@ namespace Test3.Views
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", @event.Society_ID);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name", @event.Society_ID);
             return View(@event);
         }
 
@@ -73,7 +76,8 @@ namespace Test3.Views
             {
                 return HttpNotFound();
             }
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", @event.Society_ID);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name", @event.Society_ID);
             return View(@event);
         }
 
