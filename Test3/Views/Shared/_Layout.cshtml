@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Society Management System</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/font-awesome.css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
         body {
@@ -27,12 +28,12 @@
             }
 
         #Logo {
-               margin-left: 10%;
-               width: 25%;
-               padding:1% 1% 0% 1%;
-               float: left;
-               overflow: hidden;
-               text-indent: -99999px;
+            margin-left: 10%;
+            width: 25%;
+            padding: 1% 1% 0% 1%;
+            float: left;
+            overflow: hidden;
+            text-indent: -99999px;
         }
 
         a {
@@ -56,7 +57,39 @@
             <img src="~/Images/Screenshot (20).png" alt="Logo" id="Logo" />
             @*</strong>*@
         </div>
-        <nav id="nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            
+            <a class="navbar-brand" href="#">SMS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "nav-item active" : "nav-item")">
+                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                        @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "nav-item active" : "nav-item")">
+                        @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+                        @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
+                    </li>
+
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            @Html.ActionLink("Sign Out", "Logout", "Login", null, new { @class = "nav-link" })
+                        </li>
+                    </ul>
+                }else {
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Login" ? "nav-item active" : "nav-item")">
+                        @Html.ActionLink("Login", "Login", "Login", null, new { @class = "nav-link" })
+                    </li>
+                </ul>
+                }
+            </div>
         </nav>
     </header>
     <div class="container body-content">
@@ -69,6 +102,10 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -22,7 +22,7 @@ namespace Test3.Views
         }
 
         // GET: Rooms/Details/5
-        public ActionResult Details(Int32 id)
+        public ActionResult Details(Int32? id)
         {
             if (id == null)
             {
@@ -60,7 +60,7 @@ namespace Test3.Views
         }
 
         // GET: Rooms/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
 
             if (id == null)
@@ -92,7 +92,7 @@ namespace Test3.Views
         }
 
         // GET: Rooms/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
