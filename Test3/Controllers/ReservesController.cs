@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Test3.Models;
 
 namespace Test3.Views
@@ -20,7 +21,17 @@ namespace Test3.Views
         {
             //var reserves = db.Reserves.Include(r => r.Room).Include(r => r.Event);
             s = ((User)Session["CurrentUser"]).Society_ID;
-            var reserves = db.Reserves.Include(r => r.Room).Where(a => a.Event.Society.Society_ID == s);
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
+            ViewData["society"] = s;
+            var reserves = db.Reserves.Include(r => r.Room).Where(a => a.Event.Society.Society_ID == s); ;
+            //switch (role[0])
+            //{
+            //    case "admin": reserves = db.Reserves.Include(r => r.Room).Include(a=>a.Event); break;
+            //}
+            reserves = db.Reserves.Include(r => r.Room).Include(a => a.Event);
+
             return View(reserves.ToList());
         }
 
@@ -121,9 +132,17 @@ namespace Test3.Views
         {
             if (ModelState.IsValid)
             {
-                db.Entry(reserves).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (validReserve(reserves))
+                {
+                    db.Reserves.Add(reserves);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Reservation");
+                }
+
             }
             s = ((User)Session["CurrentUser"]).Society_ID;
             ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Room_Name", reserves.Room_ID);

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/24/2019 17:13:04
--- Generated from EDMX file: C:\Users\DELL PC\Source\Repos\bitsplz\Test3\Test3\Models\Model1.edmx
+-- Date Created: 11/24/2019 18:07:03
+-- Generated from EDMX file: F:\Users\hamma\source\Repos\Test3\Test3\Models\Model1.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,17 +17,20 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_EventReserves]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_EventReserves];
-GO
 IF OBJECT_ID(N'[dbo].[FK_Position]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_Position];
 GO
 IF OBJECT_ID(N'[dbo].[FK_RoomsReserves]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_RoomsReserves];
 GO
+IF OBJECT_ID(N'[dbo].[FK_EventReserves]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_EventReserves];
+GO
 IF OBJECT_ID(N'[dbo].[FK_SocietyEvent]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Events] DROP CONSTRAINT [FK_SocietyEvent];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SocietyUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_SocietyUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserSociety]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Societies] DROP CONSTRAINT [FK_UserSociety];
@@ -37,23 +40,26 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
+GO
+IF OBJECT_ID(N'[dbo].[User_Type]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[User_Type];
+GO
+IF OBJECT_ID(N'[dbo].[Societies]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Societies];
+GO
+IF OBJECT_ID(N'[dbo].[Rooms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Rooms];
+GO
 IF OBJECT_ID(N'[dbo].[Events]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Events];
 GO
 IF OBJECT_ID(N'[dbo].[Reserves]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Reserves];
 GO
-IF OBJECT_ID(N'[dbo].[Rooms]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Rooms];
-GO
-IF OBJECT_ID(N'[dbo].[Societies]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Societies];
-GO
-IF OBJECT_ID(N'[dbo].[User_Type]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[User_Type];
-GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
+IF OBJECT_ID(N'[dbo].[Vendors]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Vendors];
 GO
 
 -- --------------------------------------------------
