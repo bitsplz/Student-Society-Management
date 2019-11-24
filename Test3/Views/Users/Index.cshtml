@@ -4,9 +4,9 @@
     ViewBag.Title = "Users";
 }
 
-    <div class="d-flex justify-content-between">
-        <h2 >Users</h2>
-        <p >
+    <div class="d-flex justify-content-between" style="margin-top:10px;">
+        <h2>Users</h2>
+        <p>
             @Html.ActionLink("Add New Entry", "Create", null, new { @class = "btn btn-primary" })
         </p>
     </div>
@@ -18,9 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.User_Name)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.User_Pass)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.User_Type.Type_Name)
             </th>
@@ -36,9 +36,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.User_Name)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.User_Pass)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.User_Type.Type_Name)
                 </td>

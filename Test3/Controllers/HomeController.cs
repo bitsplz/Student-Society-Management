@@ -31,7 +31,10 @@ namespace Test3.Controllers
             String[] a = r.GetRoles();
             switch (a[0])
             {
-                case "ob": return RedirectToAction("AfterLogin", "Users"); break;
+                case "OB": return RedirectToAction("AfterLogin", "Users");
+                case "Admin": return RedirectToAction("Admin", "Users");
+                case "IT": return RedirectToAction("Index", "Rooms");
+                case "Patron": return RedirectToAction("Patron", "Users");
             }
             ViewBag.Message = "Home Page ";
             ViewData["uname"] = User.Identity.Name;

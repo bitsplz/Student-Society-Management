@@ -38,7 +38,7 @@ namespace Test3.Views
         // GET: Societies/Create
         public ActionResult Create()
         {
-            int typeid = db.User_Type.Where(x => x.Type_Name == "patron").FirstOrDefault().Type_ID;
+            int typeid = db.User_Type.Where(x => x.Type_Name == "Patron").FirstOrDefault().Type_ID;
             ViewBag.Patron_Name =
                 new SelectList(db.Users.Where(x=>x.Type_ID == typeid), "User_Name", "User_Name");
             return View();
