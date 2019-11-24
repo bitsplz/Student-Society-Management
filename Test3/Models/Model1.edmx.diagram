@@ -17,7 +17,7 @@
         <AssociationConnector Association="Model1.SocietyEvent" />
         <AssociationConnector Association="Model1.FK_SocietyUser" />
         <AssociationConnector Association="Model1.Patrons" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

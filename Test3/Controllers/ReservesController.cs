@@ -10,14 +10,17 @@ using Test3.Models;
 
 namespace Test3.Views
 {
+    [Authorize]
     public class ReservesController : Controller
     {
         private Model1Container db = new Model1Container();
-
+        private int? s;
         // GET: Reserves
         public ActionResult Index()
         {
-            var reserves = db.Reserves.Include(r => r.Room).Include(r => r.Event);
+            //var reserves = db.Reserves.Include(r => r.Room).Include(r => r.Event);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            var reserves = db.Reserves.Include(r => r.Room).Where(a => a.Event.Society.Society_ID == s);
             return View(reserves.ToList());
         }
 
@@ -39,8 +42,9 @@ namespace Test3.Views
         // GET: Reserves/Create
         public ActionResult Create()
         {
-            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Building_Name");
-            ViewBag.Event_ID = new SelectList(db.Events, "Event_ID", "Event_name");
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Room_Name");
+            ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name");
             return View();
         }
 
@@ -57,9 +61,9 @@ namespace Test3.Views
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Building_Name", reserves.Room_ID);
-            ViewBag.Event_ID = new SelectList(db.Events, "Event_ID", "Event_name", reserves.Event_ID);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Room_Name", reserves.Room_ID);
+            ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name", reserves.Event_ID);
             return View(reserves);
         }
 
@@ -75,8 +79,9 @@ namespace Test3.Views
             {
                 return HttpNotFound();
             }
+            s = ((User)Session["CurrentUser"]).Society_ID;
             ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Building_Name", reserves.Room_ID);
-            ViewBag.Event_ID = new SelectList(db.Events, "Event_ID", "Event_name", reserves.Event_ID);
+            ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name", reserves.Event_ID);
             return View(reserves);
         }
 
@@ -93,8 +98,9 @@ namespace Test3.Views
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Building_Name", reserves.Room_ID);
-            ViewBag.Event_ID = new SelectList(db.Events, "Event_ID", "Event_name", reserves.Event_ID);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Room_Name", reserves.Room_ID);
+            ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name", reserves.Event_ID);
             return View(reserves);
         }
 
