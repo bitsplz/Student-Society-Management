@@ -63,23 +63,13 @@
 <centre><h4>Welcome @ViewData["uname"]</h4></centre>
 <div class="col-md-4 col-xs-9" id="login-page">
     <div class="form">
+
+        @*<section style="padding: 0% 30% 0% 30%;">*@
         <div class="col-md-15" style="margin-bottom: 4%;">
             @Html.ActionLink("Event", "Index", "Events", null, new { @class = "btn btn-primary col-md-9 col-sm-8 col-xs-8" })
+            @*<input type="submit" value="Event" class="button" />*@
         </div>
         <div class="col-md-15" style="margin-bottom: 4%;">
-            @Html.ActionLink("Reserve Room", "Create", "Reserves", null, new { @class = "btn btn-primary col-md-9 col-sm-8 col-xs-8" })
-        </div>
-        <div class="col-md-15" style="margin-bottom: 4%;">
-            @Html.ActionLink("Finance", "Create", "Reserves", null, new { @class = "btn btn-primary col-md-9 col-sm-8 col-xs-8" })
-        </div>
-        <div class="col-md-15" style="margin-bottom: 4%;">
-            @Html.ActionLink("Quotations", "Create", "Reserves", null, new { @class = "btn btn-primary col-md-9 col-sm-8 col-xs-8" })
-        </div>
-        <div class="col-md-15" style="margin-bottom: 4%;">
-            @Html.ActionLink("Security", "Create", "Reserves", null, new { @class = "btn btn-primary col-md-9 col-sm-8 col-xs-8" })
-        </div>
-
-        @*<div class="col-md-15" style="margin-bottom: 4%;">
             <input type="submit" value="Finance" class="button" />
         </div>
         <div class="col-md-15" style="margin-bottom: 4%;">
@@ -87,6 +77,7 @@
         </div>
         <div class="col-md-15" style="margin-bottom: 4%;">
             <input type="submit" value="Security" class="button" />
-        </div>*@
+        </div>
+        </div>
+        @*</section>*@
     </div>
-</div>

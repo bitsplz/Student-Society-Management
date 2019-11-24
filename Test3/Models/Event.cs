@@ -23,7 +23,6 @@ namespace Test3.Models
         public int Event_ID { get; set; }
         public string Event_name { get; set; }
         public int Society_ID { get; set; }
-        public Nullable<bool> Event_Approve { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reserves> Reserves { get; set; }

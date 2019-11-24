@@ -132,12 +132,5 @@ namespace Test3.Views
             }
             base.Dispose(disposing);
         }
-        public ActionResult Approve()
-        {
-            s = ((User)Session["CurrentUser"]).Society_ID;
-            var events = db.Events.Where(a => a.Society.Society_ID == s);
-
-            return View(events.ToList());
-        }
     }
 }
