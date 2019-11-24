@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Test3.Models;
 
 namespace Test3.Views
@@ -13,11 +14,16 @@ namespace Test3.Views
     public class EventsController : Controller
     {
         private Model1Container db = new Model1Container();
-
+        private int? s;
         // GET: Events
         public ActionResult Index()
         {
-            var events = db.Events.Include(a => a.Society);
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            var events = db.Events.Where(a => a.Society.Society_ID == s);
+
             return View(events.ToList());
         }
 
@@ -39,7 +45,11 @@ namespace Test3.Views
         // GET: Events/Create
         public ActionResult Create()
         {
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name");
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name");
             return View();
         }
 
@@ -48,22 +58,28 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Event_ID,Event_name,Society_ID")] Event @event)
+        public ActionResult Create([Bind(Include = "Event_ID,Event_name,Society_ID,Patron_approval")]Event @event)
         {
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
             if (ModelState.IsValid)
             {
                 db.Events.Add(@event);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", @event.Society_ID);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name", @event.Society_ID);
             return View(@event);
         }
 
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -73,7 +89,8 @@ namespace Test3.Views
             {
                 return HttpNotFound();
             }
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", @event.Society_ID);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name", @event.Society_ID);
             return View(@event);
         }
 
@@ -82,15 +99,19 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Event_ID,Event_name,Society_ID")] Event @event)
+        public ActionResult Edit([Bind(Include = "Event_ID,Event_name,Society_ID,Patron_approval")] Event @event)
         {
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", @event.Society_ID);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name", @event.Society_ID);
             return View(@event);
         }
 

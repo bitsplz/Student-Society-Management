@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/13/2019 11:45:46
--- Generated from EDMX file: C:\Users\mujta\source\repos\bitsplz\Test3\Test3\Models\Model1.edmx
+-- Date Created: 11/24/2019 18:07:03
+-- Generated from EDMX file: F:\Users\hamma\source\Repos\Test3\Test3\Models\Model1.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -28,6 +28,9 @@ IF OBJECT_ID(N'[dbo].[FK_EventReserves]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_SocietyEvent]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Events] DROP CONSTRAINT [FK_SocietyEvent];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SocietyUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_SocietyUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserSociety]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Societies] DROP CONSTRAINT [FK_UserSociety];
@@ -55,6 +58,9 @@ GO
 IF OBJECT_ID(N'[dbo].[Reserves]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Reserves];
 GO
+IF OBJECT_ID(N'[dbo].[Vendors]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Vendors];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -65,7 +71,8 @@ CREATE TABLE [dbo].[Users] (
     [User_ID] int IDENTITY(1,1) NOT NULL,
     [User_Name] varchar(100)  NOT NULL,
     [User_Pass] varchar(max)  NOT NULL,
-    [Type_ID] int  NOT NULL
+    [Type_ID] int  NOT NULL,
+    [Society_ID] int  NULL
 );
 GO
 
@@ -80,6 +87,7 @@ GO
 CREATE TABLE [dbo].[Societies] (
     [Society_ID] int IDENTITY(1,1) NOT NULL,
     [Society_Name] varchar(30)  NOT NULL,
+    [Patron_Name] nvarchar(max)  NOT NULL,
     [User_ID] int  NULL
 );
 GO
@@ -109,6 +117,15 @@ CREATE TABLE [dbo].[Reserves] (
     [End_Time] time  NOT NULL,
     [Room_ID] int  NOT NULL,
     [Event_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'Vendors'
+CREATE TABLE [dbo].[Vendors] (
+    [VendorID] int IDENTITY(1,1) NOT NULL,
+    [name] nvarchar(max)  NOT NULL,
+    [email] nvarchar(max)  NOT NULL,
+    [contactNumber] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -150,6 +167,12 @@ GO
 ALTER TABLE [dbo].[Reserves]
 ADD CONSTRAINT [PK_Reserves]
     PRIMARY KEY CLUSTERED ([Reserve_ID] ASC);
+GO
+
+-- Creating primary key on [VendorID] in table 'Vendors'
+ALTER TABLE [dbo].[Vendors]
+ADD CONSTRAINT [PK_Vendors]
+    PRIMARY KEY CLUSTERED ([VendorID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -213,6 +236,21 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_SocietyEvent'
 CREATE INDEX [IX_FK_SocietyEvent]
 ON [dbo].[Events]
+    ([Society_ID]);
+GO
+
+-- Creating foreign key on [Society_ID] in table 'Users'
+ALTER TABLE [dbo].[Users]
+ADD CONSTRAINT [FK_SocietyUser]
+    FOREIGN KEY ([Society_ID])
+    REFERENCES [dbo].[Societies]
+        ([Society_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SocietyUser'
+CREATE INDEX [IX_FK_SocietyUser]
+ON [dbo].[Users]
     ([Society_ID]);
 GO
 

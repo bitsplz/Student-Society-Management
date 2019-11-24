@@ -2,24 +2,41 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Test3.Models;
 using System.Web.Security;
+using Test3.Models;
 
-namespace Test3.Views
+namespace Test3.Controllers
 {
     public class UsersController : Controller
     {
         private Model1Container db = new Model1Container();
-
+        private int? s;
+        public ActionResult PatronHome()
+        {
+            return View();
+        }
+        public ActionResult AfterLogin()
+        {
+            return View();
+        }
         // GET: Users
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.User_Type);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+
+            var users = db.Users.Include(u => u.User_Type).Include(u => u.Society);
+            if (role[0].Equals("patron"))
+            {
+                users = db.Users.Where(u => u.User_Type.Type_Name.Equals("ob"))
+                                .Where(u => u.Society.Society_ID == s);/*.Where(u => u.Society.Society_ID == 1)*/;
+            }
+
             return View(users.ToList());
         }
 
@@ -41,7 +58,20 @@ namespace Test3.Views
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.Type_ID = new SelectList(db.User_Type, "Type_ID", "Type_Name");
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+
+            if (role[0].Equals("patron"))
+            {
+                ViewBag.Type_ID = new SelectList(db.User_Type.Where(x=>x.Type_Name.Equals("ob")), "Type_ID", "Type_Name");
+                ViewBag.Society_ID = new SelectList(db.Societies.Where(x=>x.Society_ID==s), "Society_ID", "Society_Name");
+            }
+            else
+            {
+                ViewBag.Type_ID = new SelectList(db.User_Type, "Type_ID", "Type_Name");
+                ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name");
+            }
             return View();
         }
 
@@ -50,16 +80,17 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "User_ID,User_Name,User_Pass,Type_ID")] User user)
+        public ActionResult Create([Bind(Include = "User_ID,User_Name,User_Pass,Type_ID,Society_ID")] User user)
         {
             if (ModelState.IsValid)
             {
-                    db.Users.Add(user);
-                    db.SaveChanges();
+                db.Users.Add(user);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.Type_ID = new SelectList(db.User_Type, "Type_ID", "Type_Name", user.Type_ID);
+            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", user.Society_ID);
             return View(user);
         }
 
@@ -76,6 +107,7 @@ namespace Test3.Views
                 return HttpNotFound();
             }
             ViewBag.Type_ID = new SelectList(db.User_Type, "Type_ID", "Type_Name", user.Type_ID);
+            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", user.Society_ID);
             return View(user);
         }
 
@@ -84,7 +116,7 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "User_ID,User_Name,User_Pass,Type_ID")] User user)
+        public ActionResult Edit([Bind(Include = "User_ID,User_Name,User_Pass,Type_ID,Society_ID")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -93,6 +125,7 @@ namespace Test3.Views
                 return RedirectToAction("Index");
             }
             ViewBag.Type_ID = new SelectList(db.User_Type, "Type_ID", "Type_Name", user.Type_ID);
+            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", user.Society_ID);
             return View(user);
         }
 
@@ -129,49 +162,6 @@ namespace Test3.Views
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        //public ActionResult login2()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult login2([Bind(Include = "User_Name,User_Pass")] User u)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        using (db)
-        //        {
-        //            var v = db.Users.Where(model => model.User_Name.Equals(u.User_Name) && model.User_Pass.Equals(u.User_Pass)).FirstOrDefault();
-        //            if (v != null)
-        //            {
-        //                Session["log"] = v.User_Name;
-        //                return RedirectToAction("AfterLogin");
-        //            }else return RedirectToAction("InvalidLogin");
-        //        }
-        //    }
-        //    return View(u);
-        //}
-
-        public ActionResult AfterLogin()
-        {
-            if (User.Identity.IsAuthenticated )
-            {
-                //RolePrincipal r = (RolePrincipal)User;
-                //String[] a = r.GetRoles();
-                //switch (a[0])
-                //{
-                //    case "ob": return RedirectToAction("AfterLogin", "Users"); break;
-                //}
-                //ViewBag.Message = "Home Page ";
-                //ViewData["uname"] = User.Identity.Name;
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Login");
-            }
         }
     }
 }

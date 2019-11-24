@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.Data.Entity;
 using System.Web.Security;
 using Test3.Models;
 
@@ -40,6 +42,7 @@ namespace Test3.MyRoleProvider
         {
             Model1Container db = new Model1Container();
             int typeID = db.Users.Where(x => x.User_Name.Equals(username)).FirstOrDefault().Type_ID;
+
             string data = db.User_Type.Where(x => x.Type_ID == typeID).FirstOrDefault().Type_Name;
             string[] result = { data };
             return result;

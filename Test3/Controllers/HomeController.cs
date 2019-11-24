@@ -32,9 +32,11 @@ namespace Test3.Controllers
             switch (a[0])
             {
                 case "ob": return RedirectToAction("AfterLogin", "Users"); break;
+                case "patron": return RedirectToAction("PatronHome", "Users"); break;
             }
             ViewBag.Message = "Home Page ";
             ViewData["uname"] = User.Identity.Name;
+            
             return View();
         }
         
