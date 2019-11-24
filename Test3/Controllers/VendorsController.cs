@@ -1,123 +1,111 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Test3.Models;
-
 namespace Test3.Views
 {
-    public class SocietiesController : Controller
+    public class VendorsController : Controller
     {
         private Model1Container db = new Model1Container();
 
-
-        
-        // GET: Societies
+        // GET: Vendors
         public ActionResult Index()
         {
-            return View(db.Societies.ToList());
+            return View(db.Vendors.ToList());
         }
 
-        // GET: Societies/Details/5
+        // GET: Vendors/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Society society = db.Societies.Find(id);
-            if (society == null)
+            Vendors vendors = db.Vendors.Find(id);
+            if (vendors == null)
             {
                 return HttpNotFound();
             }
-            return View(society);
+            return View(vendors);
         }
 
-        // GET: Societies/Create
+        // GET: Vendors/Create
         public ActionResult Create()
         {
-            int typeid = db.User_Type.Where(x => x.Type_Name == "Patron").FirstOrDefault().Type_ID;
-            ViewBag.Patron_Name =
-                new SelectList(db.Users.Where(x=>x.Type_ID == typeid), "User_Name", "User_Name");
             return View();
         }
 
-        // POST: Societies/Create
+        // POST: Vendors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Society_ID,Society_Name,Patron_Name")] Society society)
+        public ActionResult Create([Bind(Include = "VendorID,name,email,contactNumber")] Vendors vendors)
         {
             if (ModelState.IsValid)
             {
-                db.Societies.Add(society);
+                db.Vendors.Add(vendors);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            int typeid = db.User_Type.Where(x => x.Type_Name == "patron").FirstOrDefault().Type_ID;
-            ViewBag.Patron_Name =
-                new SelectList(db.Users, "User_ID", "User_Name");
-            return View(society);
+
+            return View(vendors);
         }
 
-        // GET: Societies/Edit/5
+        // GET: Vendors/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Society society = db.Societies.Find(id);
-            if (society == null)
+            Vendors vendors = db.Vendors.Find(id);
+            if (vendors == null)
             {
                 return HttpNotFound();
             }
-            return View(society);
+            return View(vendors);
         }
 
-        // POST: Societies/Edit/5
+        // POST: Vendors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Society_ID,Society_Name,Patron_Name")] Society society)
+        public ActionResult Edit([Bind(Include = "VendorID,name,email,contactNumber")] Vendors vendors)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(society).State = EntityState.Modified;
+                db.Entry(vendors).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(society);
+            return View(vendors);
         }
 
-        // GET: Societies/Delete/5
+        // GET: Vendors/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Society society = db.Societies.Find(id);
-            if (society == null)
+            Vendors vendors = db.Vendors.Find(id);
+            if (vendors == null)
             {
                 return HttpNotFound();
             }
-            return View(society);
+            return View(vendors);
         }
 
-        // POST: Societies/Delete/5
+        // POST: Vendors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Society society = db.Societies.Find(id);
-            db.Societies.Remove(society);
+            Vendors vendors = db.Vendors.Find(id);
+            db.Vendors.Remove(vendors);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

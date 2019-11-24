@@ -166,6 +166,9 @@
     <Compile Include="Models\User_Type.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Vendors.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="MyRoleProvider\SiteRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
@@ -178,11 +181,12 @@
     <Compile Include="Controllers\ReservesController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\SocietiesController.cs" />
-    <Compile Include="WebForm1.aspx.cs">
+    <Compile Include="Controllers\VendorsController.cs" />
+    <Compile Include="Views\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
+    <Compile Include="Views\WebForm1.aspx.designer.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -494,7 +498,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="WebForm1.aspx" />
+    <Content Include="Views\WebForm1.aspx" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -564,9 +568,6 @@
     <Content Include="Views\Societies\Details.cshtml" />
     <Content Include="Views\Societies\Edit.cshtml" />
     <Content Include="Views\Societies\Index.cshtml" />
-    <Content Include="Views\Users\Patron.cshtml" />
-    <Content Include="Views\Events\Approve.cshtml" />
-    <Content Include="Views\Users\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

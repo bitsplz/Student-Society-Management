@@ -17,7 +17,9 @@
         <AssociationConnector Association="Model1.SocietyEvent" />
         <AssociationConnector Association="Model1.FK_SocietyUser" />
         <AssociationConnector Association="Model1.Patrons" />
-      </Diagram>
+        <EntityTypeShape EntityType="Model1.Vendors" Width="1.5" PointX="5" PointY="6.125" />
+        <AssociationConnector Association="Model1.FK_UserSociety" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

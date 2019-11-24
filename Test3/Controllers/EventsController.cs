@@ -94,7 +94,8 @@ namespace Test3.Views
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", @event.Society_ID);
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name", @event.Society_ID);
             return View(@event);
         }
 
