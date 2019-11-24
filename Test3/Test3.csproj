@@ -555,11 +555,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Events\Create.cshtml" />
-    <Content Include="Views\Events\Delete.cshtml" />
-    <Content Include="Views\Events\Details.cshtml" />
-    <Content Include="Views\Events\Edit.cshtml" />
-    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Error\Unauthorized.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -573,6 +568,12 @@
     <Content Include="Views\Vendors\Details.cshtml" />
     <Content Include="Views\Vendors\Edit.cshtml" />
     <Content Include="Views\Vendors\Index.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Users\PatronHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

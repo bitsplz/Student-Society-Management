@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Test3.Models;
 
 namespace Test3.Controllers
@@ -13,8 +14,11 @@ namespace Test3.Controllers
     public class UsersController : Controller
     {
         private Model1Container db = new Model1Container();
-
-
+        private int? s;
+        public ActionResult PatronHome()
+        {
+            return View();
+        }
         public ActionResult AfterLogin()
         {
             return View();
@@ -22,7 +26,17 @@ namespace Test3.Controllers
         // GET: Users
         public ActionResult Index()
         {
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+
             var users = db.Users.Include(u => u.User_Type).Include(u => u.Society);
+            if (role[0].Equals("patron"))
+            {
+                users = db.Users.Where(u => u.User_Type.Type_Name.Equals("ob"))
+                                .Where(u => u.Society.Society_ID == s);/*.Where(u => u.Society.Society_ID == 1)*/;
+            }
+
             return View(users.ToList());
         }
 
@@ -44,8 +58,20 @@ namespace Test3.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.Type_ID = new SelectList(db.User_Type, "Type_ID", "Type_Name");
-            ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name");
+            s = ((User)Session["CurrentUser"]).Society_ID;
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+
+            if (role[0].Equals("patron"))
+            {
+                ViewBag.Type_ID = new SelectList(db.User_Type.Where(x=>x.Type_Name.Equals("ob")), "Type_ID", "Type_Name");
+                ViewBag.Society_ID = new SelectList(db.Societies.Where(x=>x.Society_ID==s), "Society_ID", "Society_Name");
+            }
+            else
+            {
+                ViewBag.Type_ID = new SelectList(db.User_Type, "Type_ID", "Type_Name");
+                ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name");
+            }
             return View();
         }
 

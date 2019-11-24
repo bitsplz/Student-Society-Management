@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Test3.Models;
 
 namespace Test3.Views
@@ -17,6 +18,9 @@ namespace Test3.Views
         // GET: Events
         public ActionResult Index()
         {
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
             s = ((User)Session["CurrentUser"]).Society_ID;
             var events = db.Events.Where(a => a.Society.Society_ID == s);
 
@@ -41,6 +45,9 @@ namespace Test3.Views
         // GET: Events/Create
         public ActionResult Create()
         {
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
             s = ((User)Session["CurrentUser"]).Society_ID;
             ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name");
             return View();
@@ -51,8 +58,11 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Event_ID,Event_name,Society_ID")] Event @event)
+        public ActionResult Create([Bind(Include = "Event_ID,Event_name,Society_ID,Patron_approval")]Event @event)
         {
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
             if (ModelState.IsValid)
             {
                 db.Events.Add(@event);
@@ -67,6 +77,9 @@ namespace Test3.Views
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -86,8 +99,11 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Event_ID,Event_name,Society_ID")] Event @event)
+        public ActionResult Edit([Bind(Include = "Event_ID,Event_name,Society_ID,Patron_approval")] Event @event)
         {
+            RolePrincipal roles = (RolePrincipal)User;
+            String[] role = roles.GetRoles();
+            ViewData["role"] = role[0];
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;
