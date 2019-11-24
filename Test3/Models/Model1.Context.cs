@@ -31,6 +31,5 @@ namespace Test3.Models
         public virtual DbSet<Rooms> Rooms { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Reserves> Reserves { get; set; }
-        public virtual DbSet<Vendors> Vendors { get; set; }
     }
 }

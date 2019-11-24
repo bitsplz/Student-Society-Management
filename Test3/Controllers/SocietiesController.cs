@@ -14,8 +14,6 @@ namespace Test3.Views
     {
         private Model1Container db = new Model1Container();
 
-
-        
         // GET: Societies
         public ActionResult Index()
         {

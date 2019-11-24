@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Test3.Views {
-    
-    
-    public partial class WebForm1 {
-        
+namespace Test3
+{
+
+
+    public partial class WebForm1
+    {
+
         /// <summary>
         /// form1 control.
         /// </summary>

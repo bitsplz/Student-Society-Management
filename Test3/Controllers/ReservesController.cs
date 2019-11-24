@@ -6,32 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using Test3.Models;
 
 namespace Test3.Views
 {
-    [Authorize]
     public class ReservesController : Controller
     {
         private Model1Container db = new Model1Container();
-        private int? s;
+
         // GET: Reserves
         public ActionResult Index()
         {
-            //var reserves = db.Reserves.Include(r => r.Room).Include(r => r.Event);
-            s = ((User)Session["CurrentUser"]).Society_ID;
-            RolePrincipal roles = (RolePrincipal)User;
-            String[] role = roles.GetRoles();
-            ViewData["role"] = role[0];
-            ViewData["society"] = s;
-            var reserves = db.Reserves.Include(r => r.Room).Where(a => a.Event.Society.Society_ID == s); ;
-            //switch (role[0])
-            //{
-            //    case "admin": reserves = db.Reserves.Include(r => r.Room).Include(a=>a.Event); break;
-            //}
-            reserves = db.Reserves.Include(r => r.Room).Include(a => a.Event);
-
+            var reserves = db.Reserves.Include(r => r.Room).Include(r => r.Event);
             return View(reserves.ToList());
         }
 
@@ -53,9 +39,8 @@ namespace Test3.Views
         // GET: Reserves/Create
         public ActionResult Create()
         {
-            s = ((User)Session["CurrentUser"]).Society_ID;
-            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Room_Name");
-            ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name");
+            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Building_Name");
+            ViewBag.Event_ID = new SelectList(db.Events, "Event_ID", "Event_name");
             return View();
         }
 
@@ -66,43 +51,16 @@ namespace Test3.Views
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Reserve_ID,Date,Start_Time,End_Time,Room_ID,Event_ID")] Reserves reserves)
         {
-
             if (ModelState.IsValid)
             {
-                if (validReserve(reserves))
-                {
-                    db.Reserves.Add(reserves);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid Reservation");
-                }
-                
+                db.Reserves.Add(reserves);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            s = ((User)Session["CurrentUser"]).Society_ID;
-            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Room_Name", reserves.Room_ID);
-            ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name", reserves.Event_ID);
-            
-            return View(reserves);
-        }
 
-        private Boolean validReserve(Reserves reserves)
-        {
-           Reserves temp = db.Reserves.Where(x => ((reserves.Start_Time >= x.Start_Time
-                                            && reserves.Start_Time <= x.End_Time)
-                                            || (reserves.End_Time >= x.Start_Time
-                                            && reserves.End_Time <= x.End_Time)
-                                            || (reserves.Start_Time <= x.Start_Time
-                                            && reserves.End_Time >= x.End_Time))
-                                            && x.Date == reserves.Date
-                                            && x.Room_ID == reserves.Room_ID).FirstOrDefault();
-            if(temp == null)
-            {
-                return true;
-            }
-            return false;
+            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Building_Name", reserves.Room_ID);
+            ViewBag.Event_ID = new SelectList(db.Events, "Event_ID", "Event_name", reserves.Event_ID);
+            return View(reserves);
         }
 
         // GET: Reserves/Edit/5
@@ -117,9 +75,8 @@ namespace Test3.Views
             {
                 return HttpNotFound();
             }
-            s = ((User)Session["CurrentUser"]).Society_ID;
             ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Building_Name", reserves.Room_ID);
-            ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name", reserves.Event_ID);
+            ViewBag.Event_ID = new SelectList(db.Events, "Event_ID", "Event_name", reserves.Event_ID);
             return View(reserves);
         }
 
@@ -132,21 +89,12 @@ namespace Test3.Views
         {
             if (ModelState.IsValid)
             {
-                if (validReserve(reserves))
-                {
-                    db.Reserves.Add(reserves);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid Reservation");
-                }
-
+                db.Entry(reserves).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            s = ((User)Session["CurrentUser"]).Society_ID;
-            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Room_Name", reserves.Room_ID);
-            ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name", reserves.Event_ID);
+            ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Building_Name", reserves.Room_ID);
+            ViewBag.Event_ID = new SelectList(db.Events, "Event_ID", "Event_name", reserves.Event_ID);
             return View(reserves);
         }
 
