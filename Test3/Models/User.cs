@@ -14,6 +14,12 @@ namespace Test3.Models
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Societies = new HashSet<Society>();
+        }
+    
         public int User_ID { get; set; }
         public string User_Name { get; set; }
         public string User_Pass { get; set; }
@@ -22,5 +28,7 @@ namespace Test3.Models
     
         public virtual User_Type User_Type { get; set; }
         public virtual Society Society { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Society> Societies { get; set; }
     }
 }

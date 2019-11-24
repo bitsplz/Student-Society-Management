@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/22/2019 14:21:00
--- Generated from EDMX file: F:\Users\hamma\source\Repos\Test3\Test3\Models\Model1.edmx
+-- Date Created: 11/24/2019 17:13:04
+-- Generated from EDMX file: C:\Users\DELL PC\Source\Repos\bitsplz\Test3\Test3\Models\Model1.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,43 +17,43 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_EventReserves]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_EventReserves];
+GO
 IF OBJECT_ID(N'[dbo].[FK_Position]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_Position];
 GO
 IF OBJECT_ID(N'[dbo].[FK_RoomsReserves]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_RoomsReserves];
 GO
-IF OBJECT_ID(N'[dbo].[FK_EventReserves]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Reserves] DROP CONSTRAINT [FK_EventReserves];
-GO
 IF OBJECT_ID(N'[dbo].[FK_SocietyEvent]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Events] DROP CONSTRAINT [FK_SocietyEvent];
 GO
-IF OBJECT_ID(N'[dbo].[FK_SocietyUser]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_SocietyUser];
+IF OBJECT_ID(N'[dbo].[FK_UserSociety]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Societies] DROP CONSTRAINT [FK_UserSociety];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
-GO
-IF OBJECT_ID(N'[dbo].[User_Type]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[User_Type];
-GO
-IF OBJECT_ID(N'[dbo].[Societies]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Societies];
-GO
-IF OBJECT_ID(N'[dbo].[Rooms]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Rooms];
-GO
 IF OBJECT_ID(N'[dbo].[Events]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Events];
 GO
 IF OBJECT_ID(N'[dbo].[Reserves]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Reserves];
+GO
+IF OBJECT_ID(N'[dbo].[Rooms]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Rooms];
+GO
+IF OBJECT_ID(N'[dbo].[Societies]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Societies];
+GO
+IF OBJECT_ID(N'[dbo].[User_Type]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[User_Type];
+GO
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -81,7 +81,8 @@ GO
 CREATE TABLE [dbo].[Societies] (
     [Society_ID] int IDENTITY(1,1) NOT NULL,
     [Society_Name] varchar(30)  NOT NULL,
-    [Patron_Name] nvarchar(max)  NOT NULL
+    [Patron_Name] nvarchar(max)  NOT NULL,
+    [User_ID] int  NULL
 );
 GO
 
@@ -110,6 +111,15 @@ CREATE TABLE [dbo].[Reserves] (
     [End_Time] time  NOT NULL,
     [Room_ID] int  NOT NULL,
     [Event_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'Vendors'
+CREATE TABLE [dbo].[Vendors] (
+    [VendorID] int IDENTITY(1,1) NOT NULL,
+    [name] nvarchar(max)  NOT NULL,
+    [email] nvarchar(max)  NOT NULL,
+    [contactNumber] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -151,6 +161,12 @@ GO
 ALTER TABLE [dbo].[Reserves]
 ADD CONSTRAINT [PK_Reserves]
     PRIMARY KEY CLUSTERED ([Reserve_ID] ASC);
+GO
+
+-- Creating primary key on [VendorID] in table 'Vendors'
+ALTER TABLE [dbo].[Vendors]
+ADD CONSTRAINT [PK_Vendors]
+    PRIMARY KEY CLUSTERED ([VendorID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -230,6 +246,21 @@ GO
 CREATE INDEX [IX_FK_SocietyUser]
 ON [dbo].[Users]
     ([Society_ID]);
+GO
+
+-- Creating foreign key on [User_ID] in table 'Societies'
+ALTER TABLE [dbo].[Societies]
+ADD CONSTRAINT [FK_UserSociety]
+    FOREIGN KEY ([User_ID])
+    REFERENCES [dbo].[Users]
+        ([User_ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserSociety'
+CREATE INDEX [IX_FK_UserSociety]
+ON [dbo].[Societies]
+    ([User_ID]);
 GO
 
 -- --------------------------------------------------
