@@ -55,16 +55,43 @@ namespace Test3.Views
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Reserve_ID,Date,Start_Time,End_Time,Room_ID,Event_ID")] Reserves reserves)
         {
+
             if (ModelState.IsValid)
             {
-                db.Reserves.Add(reserves);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (validReserve(reserves))
+                {
+                    db.Reserves.Add(reserves);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Reservation");
+                }
+                
             }
             s = ((User)Session["CurrentUser"]).Society_ID;
             ViewBag.Room_ID = new SelectList(db.Rooms, "Room_ID", "Room_Name", reserves.Room_ID);
             ViewBag.Event_ID = new SelectList(db.Events.Where(a => a.Society.Society_ID == s), "Event_ID", "Event_name", reserves.Event_ID);
+            
             return View(reserves);
+        }
+
+        private Boolean validReserve(Reserves reserves)
+        {
+           Reserves temp = db.Reserves.Where(x => ((reserves.Start_Time >= x.Start_Time
+                                            && reserves.Start_Time <= x.End_Time)
+                                            || (reserves.End_Time >= x.Start_Time
+                                            && reserves.End_Time <= x.End_Time)
+                                            || (reserves.Start_Time <= x.Start_Time
+                                            && reserves.End_Time >= x.End_Time))
+                                            && x.Date == reserves.Date
+                                            && x.Room_ID == reserves.Room_ID).FirstOrDefault();
+            if(temp == null)
+            {
+                return true;
+            }
+            return false;
         }
 
         // GET: Reserves/Edit/5

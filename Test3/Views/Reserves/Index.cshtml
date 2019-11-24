@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Test3.Models.Reserves>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Reservations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -22,7 +22,7 @@
             @Html.DisplayNameFor(model => model.End_Time)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Room.Building_Name)
+            @Html.DisplayNameFor(model => model.Room.Room_Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Event.Event_name)
@@ -44,7 +44,7 @@
             @Html.DisplayFor(modelItem => item.End_Time)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Room.Building_Name)
+            @Html.DisplayFor(modelItem => item.Room.Room_Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Event.Event_name)
