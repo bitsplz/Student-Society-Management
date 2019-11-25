@@ -83,8 +83,9 @@
             </div>
 
             <div class="form-group">
-                @Html.EditorFor(model => model.User_Pass, new { htmlAttributes = new { @class = "input", placeholder = "Password" } })
-                @Html.ValidationMessageFor(model => model.User_Pass, "", new { @class = "text-danger" })
+                @*@Html.PasswordFor(model => model.User_Pass, new { htmlAttributes = new { @class = "input", placeholder = "Password" } })*@
+                @Html.PasswordFor(model => model.User_Pass, new { @class="input" , placeholder = "Password" })
+                @Html.ValidationMessageFor(model => model.User_Pass, "", new { @class = "text-danger"})
             </div>
 
             <div class="form-group">

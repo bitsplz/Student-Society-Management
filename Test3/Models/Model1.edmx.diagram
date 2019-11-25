@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bb06b93f9d9b44bf9ff11248fe6fe232" Name="Diagram1" ZoomLevel="86" >
+      <Diagram DiagramId="bb06b93f9d9b44bf9ff11248fe6fe232" Name="Diagram1" ZoomLevel="81" >
         <EntityTypeShape EntityType="Model1.User" Width="1.5" PointX="0.625" PointY="0.5" />
         <EntityTypeShape EntityType="Model1.User_Type" Width="1.5" PointX="3.25" PointY="0.5" />
         <AssociationConnector Association="Model1.Position" />
@@ -17,7 +17,7 @@
         <AssociationConnector Association="Model1.SocietyEvent" />
         <AssociationConnector Association="Model1.FK_SocietyUser" />
         <AssociationConnector Association="Model1.Patrons" />
-        <EntityTypeShape EntityType="Model1.Vendors" Width="1.5" PointX="5" PointY="6.125" />
+        <EntityTypeShape EntityType="Model1.Vendors" Width="1.5" PointX="8" PointY="5" />
         <AssociationConnector Association="Model1.FK_UserSociety" />
         </Diagram>
     </edmx:Diagrams>

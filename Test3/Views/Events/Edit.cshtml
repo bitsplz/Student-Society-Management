@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    if(ViewData["role"].Equals("patron"))
+    if (ViewData["role"].Equals("Patron"))
     {
         <div class="form-group">
             <div class="col-lg-10">
@@ -41,6 +41,43 @@
                     @Html.EditorFor(model => model.Patron_approval, new { htmlAttributes = new { @class = "custom-control-input" } })
                     @Html.LabelFor(model => model.Patron_approval, htmlAttributes: new { @class = "custom-control-label" })
                     @Html.ValidationMessageFor(model => model.Patron_approval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            <div class="col-lg-10">
+                <div class="custom-control custom-checkbox">
+                    @Html.EditorFor(model => model.Patron_approval, new { htmlAttributes = new { @class = "custom-control-input", type="hidden"} })
+                    @Html.LabelFor(model => model.Patron_approval, htmlAttributes: new { @class = "custom-control-label" })
+                    @Html.ValidationMessageFor(model => model.Patron_approval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+
+    if (ViewData["role"].Equals("Finance"))
+    {
+        <div class="form-group">
+            <div class="col-lg-10">
+                <div class="custom-control custom-checkbox">
+                    @Html.EditorFor(model => model.Finance_approval, new { htmlAttributes = new { @class = "custom-control-input" } })
+                    @Html.LabelFor(model => model.Finance_approval, htmlAttributes: new { @class = "custom-control-label" })
+                    @Html.ValidationMessageFor(model => model.Finance_approval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            <div class="col-lg-10">
+                <div class="custom-control custom-checkbox">
+                    @Html.EditorFor(model => model.Finance_approval, new { htmlAttributes = new { @class = "custom-control-input", type="hidden" } })
+                    @Html.LabelFor(model => model.Finance_approval, htmlAttributes: new { @class = "custom-control-label" })
+                    @Html.ValidationMessageFor(model => model.Finance_approval, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

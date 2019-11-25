@@ -6,7 +6,7 @@
 }
 
 <h2>Index</h2>
-@if (!ViewData["role"].Equals("patron"))
+@if (!ViewData["role"].Equals("Patron"))
 {
     <p>
         @Html.ActionLink("Create New", "Create")
@@ -22,53 +22,90 @@
         </th>
 
         <th>
+            @Html.DisplayNameFor(model => model.Budget)
+        </th>
+
+        <th>
             @Html.DisplayNameFor(model => model.Patron_approval)
         </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Finance_approval)
+        </th>
+
+
 
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Society.Society_Name)
-            </td>
-            <td>
-                @if (!item.Patron_approval)
-                {
-                    <img src="~/Images/error.png" />
-                }
-                else
-                {
-                    <img src="~/Images/success.png" />
-                }
-                @*@Html.DisplayFor(modelItem => item.Patron_approval)*@
-            </td>
-            <td>
-                @if (ViewData["role"].Equals("patron"))
-                {
-                    if (!item.Patron_approval)
-                    {
-                        @Html.ActionLink("Approve", "Edit", new { id = item.Event_ID }, new { @class = "btn btn-success" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Reject", "Edit", new { id = item.Event_ID }, new { @class = "btn btn-danger" })
-                    }
-                }
-                else
-                {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Event_name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Society.Society_Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Budget)
+    </td>
+    <td>
+        @if (!item.Patron_approval)
+        {
+            <img src="~/Images/error.png" />
+        }
+        else
+        {
+            <img src="~/Images/success.png" />
+        }
+        @*@Html.DisplayFor(modelItem => item.Patron_approval)*@
+    </td>
+    <td>
+        @if (!item.Finance_approval)
+        {
+            <img src="~/Images/error.png" />
+        }
+        else
+        {
+            <img src="~/Images/success.png" />
+        }
+        @*@Html.DisplayFor(modelItem => item.Patron_approval)*@
+    </td>
+    <td>
+        @if (ViewData["role"].Equals("Patron"))
+        {
+            if (!item.Patron_approval)
+            {
+                @Html.ActionLink("Approve", "Edit", new { id = item.Event_ID }, new { @class = "btn btn-success" })
+            }
+            else
+            {
+                @Html.ActionLink("Reject", "Edit", new { id = item.Event_ID }, new { @class = "btn btn-danger" })
+            }
+        }
+        else if (ViewData["role"].Equals("Finance"))
+        {
+            if (!item.Finance_approval)
+            {
+                @Html.ActionLink("Approve", "Edit", new { id = item.Event_ID }, new { @class = "btn btn-success" })
+            }
+            else
+            {
+                @Html.ActionLink("Reject", "Edit", new { id = item.Event_ID }, new { @class = "btn btn-danger" })
+            }
 
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) @:|
-                    @Html.ActionLink("Details", "Details", new { id = item.Event_ID }) @:|
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })
-                }
-            </td>
-        </tr>
+        }
+        else
+        {
+
+            @Html.ActionLink("Edit", "Edit", new { id = item.Event_ID }) @:|
+            @Html.ActionLink("Details", "Details", new { id = item.Event_ID }) @:|
+            @Html.ActionLink("Delete", "Delete", new { id = item.Event_ID })
+        }
+
+    </td>
+</tr>
     }
 
 </table>

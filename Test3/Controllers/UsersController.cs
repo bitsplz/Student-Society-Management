@@ -15,6 +15,12 @@ namespace Test3.Controllers
     {
         private Model1Container db = new Model1Container();
         private int? s;
+
+        public ActionResult AdminHome()
+        {
+            return View();
+        }
+
         public ActionResult PatronHome()
         {
             return View();
@@ -31,9 +37,9 @@ namespace Test3.Controllers
             String[] role = roles.GetRoles();
 
             var users = db.Users.Include(u => u.User_Type).Include(u => u.Society);
-            if (role[0].Equals("patron"))
+            if (role[0].Equals("Patron"))
             {
-                users = db.Users.Where(u => u.User_Type.Type_Name.Equals("ob"))
+                users = db.Users.Where(u => u.User_Type.Type_Name.Equals("OB"))
                                 .Where(u => u.Society.Society_ID == s);/*.Where(u => u.Society.Society_ID == 1)*/;
             }
 
@@ -62,7 +68,7 @@ namespace Test3.Controllers
             RolePrincipal roles = (RolePrincipal)User;
             String[] role = roles.GetRoles();
 
-            if (role[0].Equals("patron"))
+            if (role[0].Equals("Patron"))
             {
                 ViewBag.Type_ID = new SelectList(db.User_Type.Where(x=>x.Type_Name.Equals("ob")), "Type_ID", "Type_Name");
                 ViewBag.Society_ID = new SelectList(db.Societies.Where(x=>x.Society_ID==s), "Society_ID", "Society_Name");

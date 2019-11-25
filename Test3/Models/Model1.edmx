@@ -13,6 +13,8 @@
           <Property Name="Event_name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Society_ID" Type="int" Nullable="false" />
           <Property Name="Patron_approval" Type="bit" Nullable="false" />
+          <Property Name="Budget" Type="int" Nullable="false" />
+          <Property Name="Finance_approval" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Reserves">
           <Key>
@@ -276,6 +278,8 @@
           <NavigationProperty Name="Society" Relationship="Model1.SocietyEvent" FromRole="Event" ToRole="Society" />
           <Property Name="Society_ID" Type="Int32" Nullable="false" />
           <Property Name="Patron_approval" Type="Boolean" Nullable="false" />
+          <Property Name="Budget" Type="Int32" Nullable="false" />
+          <Property Name="Finance_approval" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Reserves">
           <Key>
@@ -407,7 +411,9 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="IsTypeOf(Model1.Event)">
         <MappingFragment StoreEntitySet="Events">
-          <ScalarProperty Name="Patron_approval" ColumnName="Patron_approval" />
+          <ScalarProperty Name="Finance_approval" ColumnName="Finance_approval" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="Patron_approval" ColumnName="Patron_approval" />
                 <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
           <ScalarProperty Name="Event_name" ColumnName="Event_name" />
           <ScalarProperty Name="Society_ID" ColumnName="Society_ID" />

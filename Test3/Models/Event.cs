@@ -24,6 +24,8 @@ namespace Test3.Models
         public string Event_name { get; set; }
         public int Society_ID { get; set; }
         public bool Patron_approval { get; set; }
+        public int Budget { get; set; }
+        public bool Finance_approval { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reserves> Reserves { get; set; }

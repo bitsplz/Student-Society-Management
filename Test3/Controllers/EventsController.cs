@@ -23,6 +23,9 @@ namespace Test3.Views
             ViewData["role"] = role[0];
             s = ((User)Session["CurrentUser"]).Society_ID;
             var events = db.Events.Where(a => a.Society.Society_ID == s);
+            if (role[0].Equals("Finance")){
+                events = db.Events.Include(a => a.Society);
+            }
 
             return View(events.ToList());
         }
@@ -58,7 +61,7 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Event_ID,Event_name,Society_ID,Patron_approval")]Event @event)
+        public ActionResult Create([Bind(Include = "Event_ID,Event_name,Society_ID,Budget,Patron_approval,Finance_approval")]Event @event)
         {
             RolePrincipal roles = (RolePrincipal)User;
             String[] role = roles.GetRoles();
@@ -90,7 +93,14 @@ namespace Test3.Views
                 return HttpNotFound();
             }
             s = ((User)Session["CurrentUser"]).Society_ID;
-            ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name", @event.Society_ID);
+            if (role[0].Equals("Finance"))
+            {
+                ViewBag.Society_ID = new SelectList(db.Societies, "Society_ID", "Society_Name", @event.Society_ID);
+            }
+            else
+            {
+                ViewBag.Society_ID = new SelectList(db.Societies.Where(a => a.Society_ID == s), "Society_ID", "Society_Name", @event.Society_ID);
+            }
             return View(@event);
         }
 
@@ -99,13 +109,22 @@ namespace Test3.Views
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Event_ID,Event_name,Society_ID,Patron_approval")] Event @event)
+        public ActionResult Edit([Bind(Include = "Event_ID,Event_name,Society_ID,Budget,Patron_approval,Finance_approval")] Event @event)
         {
             RolePrincipal roles = (RolePrincipal)User;
             String[] role = roles.GetRoles();
             ViewData["role"] = role[0];
             if (ModelState.IsValid)
             {
+                //Event original = db.Events.Where(x => x.Event_ID == @event.Event_ID).FirstOrDefault();
+                //if (original.Finance_approval)
+                //{
+                //    @event.Finance_approval = true;
+                //}
+                //if (original.Patron_approval)
+                //{
+                //    @event.Patron_approval = true;
+                //}
                 db.Entry(@event).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
